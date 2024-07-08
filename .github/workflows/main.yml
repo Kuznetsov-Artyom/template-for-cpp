@@ -23,3 +23,24 @@ jobs:
       env:
         CC: gcc-12
         CXX: g++-12
+
+  ubuntu-clang-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install clang-17
+    - name: CMake configure
+      run: >
+        cmake -S . -B build
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Build
+      run: |
+        cmake --build build
+      env:
+        CC: clang-17
+        CXX: clang++-17
