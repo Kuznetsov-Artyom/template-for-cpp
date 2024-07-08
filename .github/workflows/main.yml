@@ -31,7 +31,7 @@ jobs:
     - name: Setup environment
       run: |
         sudo apt-get update
-        sudo apt-get install clang-18
+        sudo apt-get install clang-15
     - name: CMake configure
       run: >
         cmake -S . -B build
@@ -42,5 +42,5 @@ jobs:
       run: |
         cmake --build build
       env:
-        CC: clang-18
-        CXX: clang++-18
+        CC: clang-15
+        CXX: clang++-15
