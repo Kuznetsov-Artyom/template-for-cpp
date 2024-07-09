@@ -1,16 +1,18 @@
-name: Build
+name: CI
 
 on: [push, pull_request]
 
 jobs:
-  clang-format:
+  code-style-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: DoozyX/clang-format-lint-action@v0.17
         with:
           source: '.'
-          
+          clangFormatVersion: 17
+          inplace: True
+
   ubuntu-gcc-build:
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +24,7 @@ jobs:
         sudo apt-get install valgrind
         sudo apt-get install gcc-12 g++-12
     - name: CMake configure
-      run: >
+      run: |
         cmake -S . -B build
       env:
         CC: gcc-12
@@ -45,7 +47,7 @@ jobs:
         sudo apt-get install valgrind
         sudo apt-get install clang-15
     - name: CMake configure
-      run: >
+      run: |
         cmake -S . -B build
       env:
         CC: clang-15
