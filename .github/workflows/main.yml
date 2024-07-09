@@ -1,8 +1,20 @@
-name: Build
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
 
 jobs:
+  code-style-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DoozyX/clang-format-lint-action@v0.17
+        with:
+          source: '.'
+          clangFormatVersion: 17
+
   ubuntu-gcc-build:
     runs-on: ubuntu-latest
     steps:
@@ -10,16 +22,55 @@ jobs:
     - name: Setup environment
       run: |
         sudo apt-get update
+        sudo apt-get install cppcheck
+        sudo apt-get install valgrind
         sudo apt-get install gcc-12 g++-12
     - name: CMake configure
-      run: >
+      run: |
         cmake -S . -B build
       env:
         CC: gcc-12
         CXX: g++-12
     - name: Build
       run: |
-        cmake --build build
+        cmake --build build --config Release
       env:
         CC: gcc-12
         CXX: g++-12
+
+  ubuntu-clang-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install cppcheck
+        sudo apt-get install valgrind
+        sudo apt-get install clang-15
+    - name: CMake configure
+      run: |
+        cmake -S . -B build
+      env:
+        CC: clang-15
+        CXX: clang++-15
+    - name: Build
+      run: |
+        cmake --build build --config Release
+      env:
+        CC: clang-15
+        CXX: clang++-15
+  windows-msvc-build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: CMake configure
+        shell: bash
+        run: |
+          cmake -S . -B build
+      - name: Build
+        shell: bash
+        run: |
+          cmake --build build --config Release
