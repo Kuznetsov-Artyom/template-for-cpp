@@ -27,8 +27,8 @@ jobs:
         sudo apt-get install gcc-12 g++-12
     - name: CMake configure
       run: |
-        cmake -S . -B build
-        -D ENABLE_TESTS=ON
+        cmake -S . -B build \
+        -D ENABLE_TESTS=ON \
         -D CMAKE_BUILD_TYPE=Release
       env:
         CC: gcc-12
@@ -52,8 +52,8 @@ jobs:
         sudo apt-get install clang-15
     - name: CMake configure
       run: |
-        cmake -S . -B build
-        -D ENABLE_TESTS=ON
+        cmake -S . -B build \
+        -D ENABLE_TESTS=ON \
         -D CMAKE_BUILD_TYPE=Release
       env:
         CC: clang-15
@@ -73,8 +73,8 @@ jobs:
       - name: CMake configure
         shell: bash
         run: |
-          cmake -S . -B build
-          -D ENABLE_TESTS=ON
+          cmake -S . -B build \
+          -D ENABLE_TESTS=ON \
           -D CMAKE_BUILD_TYPE=Release
       - name: Build
         shell: bash
