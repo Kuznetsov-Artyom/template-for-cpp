@@ -2,7 +2,7 @@
 
 #include "arith_ops.hpp"
 
-int main(int argc, char **argv, char **env) {
+int main(int argc, char **argv, char *env[]) {
   int res1 = arith::add(5, 10);
   int res2 = arith::sub(res1, 20);
   int res3 = arith::mul(res1, res2);
