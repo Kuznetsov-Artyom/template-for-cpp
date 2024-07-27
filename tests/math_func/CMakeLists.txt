@@ -1,4 +1,4 @@
-set(TARGET_NAME arith_ops_test)
+set(TARGET_NAME math_func_test)
 
 file(GLOB_RECURSE TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
@@ -9,6 +9,7 @@ target_include_directories(${TARGET_NAME} PUBLIC
 )
 
 target_link_libraries(${TARGET_NAME} PUBLIC
+    math_func
     arith_ops
     gtest
     gtest_main
