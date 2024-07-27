@@ -1,13 +1,33 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.25.0)
 
-project(arith_functions)
+project(math_functions)
 
-include_directories(include)
-include_directories(src)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(ARITH_HPP include/arith.hpp)
-set(ARITH_CPP src/arith.cpp)
-add_library(arith ${ARITH_HPP} ${ARITH_CPP})
+option(ENABLE_TESTS "Enable testing" OFF)
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} arith)
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+message("-- Build type - ${CMAKE_BUILD_TYPE}")
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/archive)
+
+set(MATH_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(MATH_LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
+
+add_subdirectory(app)
+add_subdirectory(lib)
+add_subdirectory(3rdparty)
+
+if (ENABLE_TESTS)
+    enable_testing()
+    message("-- Enable testing - ON")
+    add_subdirectory(tests)
+else()
+    message(WARNING "-- Enable testing - OFF")
+endif()
