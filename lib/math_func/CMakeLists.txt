@@ -6,9 +6,7 @@ file(GLOB_RECURSE TARGET_HEADERS ${TARGET_INCLUDE_DIR}/*.hpp)
 
 add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES} ${TARGET_HEADERS})
 
-message("${TARGET_INCLUDE_DIR}")
-
-target_include_directories(${TARGET_NAME}
-    PUBLIC ${MATH_INCLUDE_DIR}
-    PUBLIC ${TARGET_INCLUDE_DIR}
+target_include_directories(${TARGET_NAME} PUBLIC
+    ${MATH_INCLUDE_DIR}
+    ${TARGET_INCLUDE_DIR}
 )
