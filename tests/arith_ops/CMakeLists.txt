@@ -1,4 +1,4 @@
-set(TARGET_NAME arith_test)
+set(TARGET_NAME arith_ops_test)
 
 file(GLOB_RECURSE TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
