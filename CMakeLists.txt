@@ -20,6 +20,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/archive)
 set(MATH_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(MATH_LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 
+add_subdirectory(app)
 add_subdirectory(lib)
 add_subdirectory(3rdparty)
 

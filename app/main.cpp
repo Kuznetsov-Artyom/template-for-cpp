@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "arith.hpp"
+#include "arith_ops.hpp"
 
 int main(int argc, char **argv, char **env) {
   int res1 = arith::add(5, 10);
