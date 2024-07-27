@@ -28,8 +28,8 @@ jobs:
     - name: CMake configure
       run: |
         cmake -S . -B build
-        -DENABLE_TESTS=ON
-        -DCMAKE_BUILD_TYPE=Release
+        -D ENABLE_TESTS=ON
+        -D CMAKE_BUILD_TYPE=Release
       env:
         CC: gcc-12
         CXX: g++-12
@@ -53,8 +53,8 @@ jobs:
     - name: CMake configure
       run: |
         cmake -S . -B build
-        -DENABLE_TESTS=ON
-        -DCMAKE_BUILD_TYPE=Release
+        -D ENABLE_TESTS=ON
+        -D CMAKE_BUILD_TYPE=Release
       env:
         CC: clang-15
         CXX: clang++-15
@@ -74,8 +74,8 @@ jobs:
         shell: bash
         run: |
           cmake -S . -B build
-          -DENABLE_TESTS=ON
-          -DCMAKE_BUILD_TYPE=Release
+          -D ENABLE_TESTS=ON
+          -D CMAKE_BUILD_TYPE=Release
       - name: Build
         shell: bash
         run: |
