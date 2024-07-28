@@ -44,8 +44,8 @@ jobs:
     - name: Run tests
       shell: bash
       run: |
-        ./bin/tests/arith_ops_test
-        ./bin/tests/math_func_test
+        ./bin/build/tests/arith_ops_test
+        ./bin/build/tests/math_func_test
 
   ubuntu-clang-build:
     runs-on: ubuntu-latest
@@ -76,8 +76,8 @@ jobs:
     - name: Run tests
       shell: bash
       run: |
-        ./bin/tests/arith_ops_test
-        ./bin/tests/math_func_test
+        ./bin/build/tests/arith_ops_test
+        ./bin/build/tests/math_func_test
 
   windows-msvc-build:
     runs-on: windows-latest
@@ -100,5 +100,5 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          ./bin/tests/arith_ops_test
-          ./bin/tests/math_func_test
+          ./build/bin/tests/arith_ops_test
+          ./build/bin/tests/math_func_test
