@@ -1,5 +1,5 @@
-#include "factorial.hpp"
 #include "gtest/gtest.h"
+#include "math_func/factorial.hpp"
 
 TEST(Test_case_fact, test_val_5) {
   constexpr int value = 5;

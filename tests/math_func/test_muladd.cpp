@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "muladd.hpp"
+#include "math_func/muladd.hpp"
 
 TEST(Test_case_muladd, test_1) {
   constexpr int a = 5;

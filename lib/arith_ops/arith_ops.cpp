@@ -1,4 +1,4 @@
-#include "arith_ops.hpp"
+#include "arith_ops/arith_ops.hpp"
 
 namespace arith {
 int add(int a, int b) noexcept { return a + b; }
