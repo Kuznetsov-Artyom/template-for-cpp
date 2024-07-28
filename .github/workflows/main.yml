@@ -96,6 +96,5 @@ jobs:
         run: |
           cmake --build build --config Release --parallel
       - name: Run tests
-        shell: bash
         run: |
-          .\scripts\run_tests.bat
+          scripts\run_tests.bat
