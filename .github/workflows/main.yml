@@ -97,4 +97,4 @@ jobs:
           cmake --build build --config Release --parallel
       - name: Run tests
         run: |
-          stripts/run_tests.bat
+          .\scripts\run_tests.bat
