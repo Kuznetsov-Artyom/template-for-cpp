@@ -78,6 +78,9 @@ jobs:
 
   windows-msvc-build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
         with:
@@ -85,13 +88,11 @@ jobs:
       - name: msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
       - name: CMake configure
-        shell: bash
         run: |
           cmake -S . -B build \
           -D ENABLE_TESTS=ON \
           -D CMAKE_BUILD_TYPE=Release
       - name: Build
-        shell: bash
         run: |
           cmake --build build --config Release --parallel
       - name: Run tests
