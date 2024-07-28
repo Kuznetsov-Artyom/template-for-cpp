@@ -1,4 +1,5 @@
-#include "muladd.hpp"
+#include "math_func/muladd.hpp"
+#include "math_func/factorial.hpp"
 
 #include "arith_ops/arith_ops.hpp"
 

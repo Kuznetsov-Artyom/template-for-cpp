@@ -1,4 +1,4 @@
-#include "arith_ops.hpp"
+#include "arith_ops/arith_ops.hpp"
 #include "gtest/gtest.h"
 
 TEST(Test_case, add) {

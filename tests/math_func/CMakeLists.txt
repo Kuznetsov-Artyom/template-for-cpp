@@ -10,7 +10,6 @@ target_include_directories(${TARGET_NAME} PUBLIC
 
 target_link_libraries(${TARGET_NAME} PUBLIC
     math_func
-    arith_ops
     gtest
     gtest_main
 )
