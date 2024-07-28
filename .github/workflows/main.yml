@@ -44,8 +44,7 @@ jobs:
     - name: Run tests
       shell: bash
       run: |
-        ./bin/build/tests/arith_ops_test
-        ./bin/build/tests/math_func_test
+        source scripts/run_tests.sh
 
   ubuntu-clang-build:
     runs-on: ubuntu-latest
@@ -74,10 +73,8 @@ jobs:
         CC: clang-15
         CXX: clang++-15
     - name: Run tests
-      shell: bash
       run: |
-        ./bin/build/tests/arith_ops_test
-        ./bin/build/tests/math_func_test
+        source scripts/run_tests.sh
 
   windows-msvc-build:
     runs-on: windows-latest
@@ -98,7 +95,5 @@ jobs:
         run: |
           cmake --build build --config Release --parallel
       - name: Run tests
-        shell: bash
         run: |
-          ./build/bin/tests/arith_ops_test
-          ./build/bin/tests/math_func_test
+          stripts/run_tests.bat
