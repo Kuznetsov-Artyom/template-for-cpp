@@ -1,0 +1,2 @@
+# Repository template
+[![Build status](https://github.com/Kuznetsov-Artyom/TestCI/actions/workflows/main.yml/badge.svg?branch=master&event=push)](https://github.com/Kuznetsov-Artyom/TestCI/actions/workflows/main.yml)
