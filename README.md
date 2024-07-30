@@ -1,11 +1,6 @@
 # Repository template for C/C++
 [![CI](https://github.com/Kuznetsov-Artyom/TestCI/actions/workflows/main.yml/badge.svg)](https://github.com/Kuznetsov-Artyom/TestCI/actions/workflows/main.yml)
 
-## Install
-```
-git clone 
-```
-
 ## Download submodules
 ```
 git submodule update --init --recursive
