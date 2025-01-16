@@ -1,0 +1,50 @@
+name: static-analysis
+on: [pull_request]
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: DoozyX/clang-format-lint-action@v0.18.2
+        with:
+          source: '.'
+
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        submodules: recursive
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2.16
+      with:
+        key: ${{ github.job }}
+
+    - name: Run clang-tidy
+      uses: ZedThree/clang-tidy-review@v0.20.1
+      id: review
+      with:
+          config_file: .clang-tidy
+          exclude: 3rdparty
+          lgtm_comment_body: ""
+          split_workflow: true
+          annotations: false
+          apt_packages: ninja-build
+          build_dir: build
+          cmake_command: cmake -G Ninja -S . -B build
+            -DCMAKE_BUILD_TYPE=Release
+            -DENABLE_TESTS=ON
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      env:
+        CC: clang-18
+        CXX: clang++-18
+
+    - name: Check results
+      if: steps.review.outputs.total_comments > 0
+      run: |
+        echo "Errors were found during clang-tidy analysis."
+        exit 1

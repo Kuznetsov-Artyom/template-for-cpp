@@ -6,15 +6,6 @@ on:
   pull_request:
 
 jobs:
-  code-style-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DoozyX/clang-format-lint-action@v0.17
-        with:
-          source: '.'
-          clangFormatVersion: 17
-
   ubuntu-gcc-build:
     runs-on: ubuntu-latest
     steps:
@@ -57,21 +48,21 @@ jobs:
         sudo apt-get update
         sudo apt-get install cppcheck
         sudo apt-get install valgrind
-        sudo apt-get install clang-15
+        sudo apt-get install clang-18
     - name: CMake configure
       run: |
         cmake -S . -B build \
         -D ENABLE_TESTS=ON \
         -D CMAKE_BUILD_TYPE=Release
       env:
-        CC: clang-15
-        CXX: clang++-15
+        CC: clang-18
+        CXX: clang++-18
     - name: Build
       run: |
         cmake --build build --config Release --parallel
       env:
-        CC: clang-15
-        CXX: clang++-15
+        CC: clang-18
+        CXX: clang++-18
     - name: Run tests
       run: |
         source scripts/run_tests.sh
