@@ -1,0 +1,225 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  ubuntu-gcc-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        submodules: recursive
+
+    - name: Setup environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build gcc-13 g++-13
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2.16
+      with:
+        key: ${{ github.job }}
+
+    - name: Build
+      env:
+        CC: gcc-13
+        CXX: g++-13
+      run: |
+        cmake -G Ninja -S . -B build \
+        -DENABLE_TESTS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        cmake --build build --config Release --parallel
+
+    - name: Run tests
+      shell: bash
+      run: |
+        bash scripts/run_tests.sh
+
+  ubuntu-clang-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        submodules: recursive
+
+    - name: Setup environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build clang-18
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2.16
+      with:
+        key: ${{ github.job }}
+
+    - name: Build
+      env:
+        CC: clang-18
+        CXX: clang++-18
+      run: |
+        cmake -G Ninja -S . -B build \
+        -DENABLE_TESTS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        cmake --build build --config Release --parallel
+
+    - name: Run tests
+      shell: bash
+      run: |
+        bash scripts/run_tests.sh
+
+  macos-clang-build:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        submodules: recursive
+
+    - name: Setup environment
+      run: |
+        brew install ninja
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2.16
+      with:
+        key: ${{ github.job }}
+
+    - name: Build
+      run: |
+        cmake -G Ninja -S . -B build \
+        -DENABLE_TESTS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        cmake --build build --config Release --parallel
+
+    - name: Run tests
+      shell: bash
+      run: |
+        bash scripts/run_tests.sh
+
+  windows-msvc-build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Ninja
+        run: |
+          python -m pip install --upgrade pip
+          pip install ninja
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1.13.0
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2.16
+        with:
+          variant: sccache
+
+      - name: Build
+        run: |
+          cmake -G Ninja -S . -B build \
+          -DENABLE_TESTS=ON \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER_LAUNCHER=sccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+          cmake --build build --config Release --parallel
+
+      - name: Run tests
+        shell: cmd
+        run: |
+          scripts\run_tests.bat
+
+  windows-gcc-build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Ninja
+        run: |
+          python -m pip install --upgrade pip
+          pip install ninja
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2.16
+        with:
+          variant: sccache
+
+      - name: Build
+        env:
+          CC: gcc
+          CXX: g++
+        run: |
+          cmake -G Ninja -S . -B build \
+          -DENABLE_TESTS=ON \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_C_COMPILER_LAUNCHER=sccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+          cmake --build build --config Release --parallel
+
+      - name: Run tests
+        shell: cmd
+        run: |
+          scripts\run_tests.bat
+
+  windows-clang-build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Ninja
+        run: |
+          python -m pip install --upgrade pip
+          pip install ninja
+
+      - name: Install clang
+        run: |
+          choco install llvm
+          echo "C:\Program Files\LLVM\bin" >> $GITHUB_PATH
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2.16
+        with:
+          variant: sccache
+
+      - name: Build
+        env:
+          CC: clang-cl
+          CXX: clang-cl
+        run: |
+          cmake -G Ninja -S . -B build \
+          -DENABLE_TESTS=ON \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=clang-cl \
+          -DCMAKE_CXX_COMPILER=clang-cl \
+          -DCMAKE_C_COMPILER_LAUNCHER=sccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+          cmake --build build --config Release --parallel
+
+      - name: Run tests
+        shell: cmd
+        run: |
+          scripts\run_tests.bat
