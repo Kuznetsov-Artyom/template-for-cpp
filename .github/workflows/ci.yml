@@ -30,9 +30,8 @@ jobs:
       run: |
         cmake -G Ninja -S . -B build \
         -DENABLE_TESTS=ON \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        -DCCACHE_BUILD=ON \
+        -DCMAKE_BUILD_TYPE=Release
         cmake --build build --config Release --parallel
 
     - name: Run tests
@@ -64,9 +63,8 @@ jobs:
       run: |
         cmake -G Ninja -S . -B build \
         -DENABLE_TESTS=ON \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        -DCCACHE_BUILD=ON \
+        -DCMAKE_BUILD_TYPE=Release
         cmake --build build --config Release --parallel
 
     - name: Run tests
@@ -94,9 +92,8 @@ jobs:
       run: |
         cmake -G Ninja -S . -B build \
         -DENABLE_TESTS=ON \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-        -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+        -DCCACHE_BUILD=ON \
+        -DCMAKE_BUILD_TYPE=Release
         cmake --build build --config Release --parallel
 
     - name: Run tests
@@ -168,9 +165,9 @@ jobs:
         run: |
           cmake -G Ninja -S . -B build \
           -DENABLE_TESTS=ON \
-          -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_C_COMPILER=gcc \
           -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_C_COMPILER_LAUNCHER=sccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
           cmake --build build --config Release --parallel
@@ -212,9 +209,9 @@ jobs:
         run: |
           cmake -G Ninja -S . -B build \
           -DENABLE_TESTS=ON \
-          -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_C_COMPILER=clang-cl \
           -DCMAKE_CXX_COMPILER=clang-cl \
+          -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_C_COMPILER_LAUNCHER=sccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
           cmake --build build --config Release --parallel
