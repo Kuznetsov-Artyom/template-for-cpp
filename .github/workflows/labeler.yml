@@ -1,8 +1,8 @@
-name: "Labels PR"
+name: "Label bot"
 on: [pull_request]
 
 jobs:
-  label-pull-requests:
+  label-bot:
     runs-on: ubuntu-latest
     permissions:
       contents: read
