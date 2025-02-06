@@ -1,0 +1,18 @@
+name: "Labels PR"
+on: [pull_request]
+
+jobs:
+  label-pull-requests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+      - name: Add labels
+        uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: ".github/labeler.yml"
+          dot: true

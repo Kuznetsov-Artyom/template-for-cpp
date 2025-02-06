@@ -1,0 +1,24 @@
+ci:
+ - ".github/**"
+cmake:
+ - "cmake/**"
+ - "**/CMakeLists.txt"
+clang-tools:
+ - ".clang-format"
+ - ".clang-tidy"
+scripts:
+ - "scripts/**"
+3rdparty:
+ - "3rdparty/**"
+ - ".gitmodules"
+sources:
+ - "app/**"
+ - "lib/**"
+ - "include/**"
+tests:
+ - "tests/**"
+docs:
+ - "README.md"
+ - "LICENSE.txt"
+other:
+ - ".gitignore"
